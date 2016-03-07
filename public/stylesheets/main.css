@@ -1,0 +1,8 @@
+@font-face {
+    font-family: BYekan;
+    src: url("../fonts/yekan.otf") format("opentype"), url("../fonts/yekan.ttf") format("truetype");
+}
+
+* {
+    font-family: BYekan;
+}

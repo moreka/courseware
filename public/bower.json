@@ -1,0 +1,15 @@
+{
+  "name": "courseware",
+  "authors": [
+    "Mohammad Reza Karimi <m.r.karimi.j@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "dependencies": {
+    "bootstrap-rtl": "~3.3.4"
+  }
+}
