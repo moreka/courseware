@@ -8,3 +8,4 @@ target
 /RUNNING_PID
 /public/bower_components
 /project/project
+.DS_Store
