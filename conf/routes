@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+GET     /init                       controllers.Application.readEdu()
 
 GET     /login                      controllers.UserCtrl.login()
 
