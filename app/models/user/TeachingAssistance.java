@@ -18,4 +18,5 @@ public class TeachingAssistance extends Model {
     @ManyToOne(cascade = CascadeType.ALL)
     public OfferedCourse offeredCourse;
 
+    public static Finder<Long, TeachingAssistance> find = new Finder<>(TeachingAssistance.class);
 }

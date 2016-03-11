@@ -2,9 +2,11 @@ package services;
 
 import com.avaje.ebean.Model;
 import models.IUniqueID;
+import models.academics.OfferedCourse;
 import models.security.AccessType;
 import models.security.Token;
 import models.user.BasicUser;
+import models.user.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +48,12 @@ public class TokenService {
                 .eq("user.id", user.id)
                 .eq("uniqueID", item.getUID())
                 .findList().stream().map(token -> token.accessType).collect(Collectors.toList());
+    }
+
+    public void deleteTokenFor(BasicUser user, IUniqueID item, AccessType accessType) {
+        Token token = getAccessTokenTo(user, item, accessType);
+        if (token == null)
+            return;
+        token.delete();
     }
 }

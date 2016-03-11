@@ -2,6 +2,7 @@ package models.academics;
 
 import com.avaje.ebean.Model;
 import models.IUniqueID;
+import models.academics.coursework.TakenCourse;
 import models.user.BasicUser;
 import models.user.Professor;
 import models.user.Student;

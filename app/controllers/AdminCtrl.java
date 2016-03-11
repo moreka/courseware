@@ -23,7 +23,7 @@ public class AdminCtrl extends Controller {
             File currentSemesterData = EduSystemGateway.getInstance().getCurrentSemesterData();
             EduDataImportService.getInstance().importData(currentSemesterData);
 
-            return redirect(AdminCtrl.index());
+            return redirect(routes.AdminCtrl.index());
         }
         catch (AuthenticationError e) {
             e.printStackTrace();

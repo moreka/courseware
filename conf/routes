@@ -9,14 +9,14 @@ GET     /login                      controllers.UserCtrl.login()
 POST    /login                      controllers.UserCtrl.doLogin()
 GET     /logout                     controllers.UserCtrl.logout()
 
-GET     /course/:semester/:courseId                 controllers.CourseCtrl.index(semester: String, courseId: Long)
-GET     /course/:semester/:courseId/syllabus        controllers.CourseCtrl.editSyllabus(semester: String, courseId: Long)
-POST    /course/:semester/:courseId/syllabus        controllers.CourseCtrl.editSyllabusPost(semester: String, courseId: Long)
+GET     /course/:courseId                 controllers.CourseCtrl.index(courseId: Long)
+GET     /course/:courseId/syllabus        controllers.CourseCtrl.editSyllabus(courseId: Long)
+POST    /course/:courseId/syllabus        controllers.CourseCtrl.editSyllabusPost(courseId: Long)
 
-GET     /course/:semester/:courseId/manage          controllers.CourseCtrl.manageView(semester: String, courseId: Long)
-POST    /course/:semester/:courseId/addTA           controllers.CourseCtrl.addTA(semester: String, courseId: Long)
-POST    /course/:semester/:courseId/addTokenToTA    controllers.CourseCtrl.addTokenToTA(semester: String, courseId: Long)
-#GET     /course/:semester/:courseId        controllers.CourseCtrlCtrl.index(semester: String, courseId: Long)
+GET     /course/:courseId/manage                controllers.CourseCtrl.manageView(courseId: Long)
+POST    /course/:courseId/addTA                 controllers.CourseCtrl.addTA(courseId: Long)
+GET     /course/:courseId/addTokenToTA          controllers.CourseCtrl.addTokenToTA(courseId: Long)
+GET     /course/:courseId/removeTokenFromTA     controllers.CourseCtrl.removeTokenFromTA(courseId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

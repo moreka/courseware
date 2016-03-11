@@ -4,18 +4,24 @@
 
 @main("مدیریت درس") {
     <h1>مدیریت دستیاران</h1>
-    <form method="POST" action="@routes.CourseCtrl.addTA(course.semester, course.course.courseId)">
+    <form method="POST" action="@routes.CourseCtrl.addTA(course.id)">
         <input type="text" name="username" class="form-control" placeholder="شماره دانشجویی دستیار">
         <button type="submit" class="btn btn-success">send</button>
     </form>
 
     <ul>
         @for(ta <- course.tas) {
-            <li>@ta.student.id
+            <li>@ta.student.name
                 @for(t <- AccessType.values()) {
-                    [<a href="@routes.CourseCtrl.addTokenToTA(course.semester, course.course.courseId)?taId=@ta.id&t=@t">
-                        دسترسی
-                            @t</a>]
+                    @if(!ta.student.hasAccessTo(course, t)) {
+                        <a class="btn btn-success" href="@routes.CourseCtrl.addTokenToTA(course.id)?taId=@ta.id&t=@t">
+                            ایجاد دسترسی
+                            @t</a>
+                    } else {
+                        <a class="btn btn-danger" href="@routes.CourseCtrl.removeTokenFromTA(course.id)?taId=@ta.id&t=@t">
+                            حذف دسترسی
+                            @t</a>
+                    }
                 }
             </li>
         }

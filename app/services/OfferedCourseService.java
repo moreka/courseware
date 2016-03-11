@@ -15,6 +15,10 @@ public class OfferedCourseService {
     private OfferedCourseService() {
     }
 
+    public OfferedCourse getCourse(Long offeredCourseId) {
+        return OfferedCourse.find.byId(offeredCourseId);
+    }
+
     public OfferedCourse getCourse(String semester, Long courseId) {
         return OfferedCourse.find
                 .where()

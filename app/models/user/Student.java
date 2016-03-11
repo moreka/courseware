@@ -1,7 +1,7 @@
 package models.user;
 
 import models.academics.OfferedCourse;
-import models.academics.TakenCourse;
+import models.academics.coursework.TakenCourse;
 
 import javax.persistence.*;
 import java.util.List;

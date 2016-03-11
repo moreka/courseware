@@ -2,13 +2,16 @@ package controllers;
 
 import models.academics.OfferedCourse;
 import models.academics.SyllabusItem;
+import models.security.AccessType;
 import models.user.BasicUser;
 import models.user.Student;
+import models.user.TeachingAssistance;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.mvc.*;
 import security.Authenticated;
 import services.OfferedCourseService;
+import services.TokenService;
 import services.UserService;
 import views.html.courseManage;
 import views.html.courseSyllabus;
@@ -16,16 +19,16 @@ import views.html.courseSyllabus;
 @Security.Authenticated(Authenticated.class)
 public class CourseCtrl extends Controller {
 
-    public Result index(String semester, Long courseId) {
-        OfferedCourse course = OfferedCourseService.getInstance().getCourse(semester, courseId);
+    public Result index(Long courseId) {
+        OfferedCourse course = OfferedCourseService.getInstance().getCourse(courseId);
         if (course == null)
             return notFound("No such course!");
 
         return ok("Course found!");
     }
 
-    public Result editSyllabusPost(String semester, Long courseId) {
-        OfferedCourse course = OfferedCourseService.getInstance().getCourse(semester, courseId);
+    public Result editSyllabusPost(Long courseId) {
+        OfferedCourse course = OfferedCourseService.getInstance().getCourse(courseId);
         if (course == null)
             return notFound("No such course!");
 
@@ -45,11 +48,11 @@ public class CourseCtrl extends Controller {
         item.parent = parent;
         item.save();
 
-        return redirect(routes.CourseCtrl.editSyllabus(semester, courseId));
+        return redirect(routes.CourseCtrl.editSyllabus(courseId));
     }
 
-    public Result editSyllabus(String semester, Long courseId) {
-        OfferedCourse course = OfferedCourseService.getInstance().getCourse(semester, courseId);
+    public Result editSyllabus(Long courseId) {
+        OfferedCourse course = OfferedCourseService.getInstance().getCourse(courseId);
         if (course == null)
             return notFound("No such course!");
 
@@ -59,16 +62,16 @@ public class CourseCtrl extends Controller {
                 course, OfferedCourseService.getInstance().firstTierSyllabusItems(course), currentUser));
     }
 
-    public Result manageView(String semester, Long courseId) {
-        OfferedCourse course = OfferedCourseService.getInstance().getCourse(semester, courseId);
+    public Result manageView(Long courseId) {
+        OfferedCourse course = OfferedCourseService.getInstance().getCourse(courseId);
         if (course == null)
             return notFound("No such course!");
 
         return ok(courseManage.render(course));
     }
 
-    public Result addTA(String semester, long courseId) {
-        OfferedCourse course = OfferedCourseService.getInstance().getCourse(semester, courseId);
+    public Result addTA(long courseId) {
+        OfferedCourse course = OfferedCourseService.getInstance().getCourse(courseId);
         if (course == null)
             return notFound("No such course!");
 
@@ -79,10 +82,26 @@ public class CourseCtrl extends Controller {
             return badRequest("Must be a student");
 
         course.addTeacherAssistant((Student) user);
-        return redirect(routes.CourseCtrl.manageView(semester, courseId));
+        return redirect(routes.CourseCtrl.manageView(courseId));
     }
 
-    public Result addTokenToTA(String semester, long courseId) {
-        return Results.TODO;
+    public Result addTokenToTA(long courseId) {
+        OfferedCourse course = OfferedCourseService.getInstance().getCourse(courseId);
+        TeachingAssistance ta = TeachingAssistance.find.byId(Long.parseLong(request().getQueryString("taId")));
+        AccessType accessType = AccessType.valueOf(request().getQueryString("t"));
+
+        TokenService.getInstance().createTokenFor(ta.student, course, accessType);
+
+        return redirect(routes.CourseCtrl.manageView(courseId));
+    }
+
+    public Result removeTokenFromTA(long courseId) {
+        OfferedCourse course = OfferedCourseService.getInstance().getCourse(courseId);
+        TeachingAssistance ta = TeachingAssistance.find.byId(Long.parseLong(request().getQueryString("taId")));
+        AccessType accessType = AccessType.valueOf(request().getQueryString("t"));
+
+        TokenService.getInstance().deleteTokenFor(ta.student, course, accessType);
+
+        return redirect(routes.CourseCtrl.manageView(courseId));
     }
 }

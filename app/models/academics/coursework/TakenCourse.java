@@ -1,6 +1,7 @@
-package models.academics;
+package models.academics.coursework;
 
 import com.avaje.ebean.Model;
+import models.academics.OfferedCourse;
 import models.user.Student;
 
 import javax.persistence.Entity;

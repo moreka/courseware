@@ -16,6 +16,6 @@ public class Token extends Model {
 
     public String uniqueID;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     public BasicUser user;
 }
