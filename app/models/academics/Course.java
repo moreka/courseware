@@ -12,4 +12,5 @@ public class Course extends Model {
     public Long courseId;
 
     public String title;
+    public Integer departmentNo;
 }

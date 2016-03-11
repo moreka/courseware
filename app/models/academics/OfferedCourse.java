@@ -12,7 +12,6 @@ import java.util.List;
 public class OfferedCourse extends Model {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
     @ManyToOne(targetEntity = Course.class, cascade = CascadeType.ALL)
@@ -36,5 +35,7 @@ public class OfferedCourse extends Model {
         t.offeredCourse = this;
         t.save();
     }
+
+    public static Finder<Long, OfferedCourse> find = new Finder<>(OfferedCourse.class);
 
 }

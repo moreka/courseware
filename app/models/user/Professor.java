@@ -16,9 +16,14 @@ public class Professor extends BasicUser {
     @OneToMany(mappedBy = "lecturer")
     public List<OfferedCourse> offeredCourses;
 
-    public static Finder<Long, Professor> find = new Finder<>(Professor.class);
+    public static Finder<String, Professor> find = new Finder<>(Professor.class);
 
-    public Long getLecturerCode() {
+    public String getLecturerCode() {
         return this.id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Prof[%s, %s]", this.id, this.name);
     }
 }

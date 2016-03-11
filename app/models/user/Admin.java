@@ -1,16 +1,16 @@
 package models.user;
 
-import com.avaje.ebean.Model;
-
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
-public class Admin extends Model {
+@DiscriminatorValue("ADM")
+public class Admin extends BasicUser {
 
-    public String username;
-    public String password;
+    public static Finder<String, Admin> find = new Finder<>(Admin.class);
 
-    public void importDataFromEdu() { }
-
-    public static Finder<Long, Admin> find = new Finder<>(Admin.class);
+    @Override
+    public String toString() {
+        return String.format("Admin[%s, %s]", id, name);
+    }
 }

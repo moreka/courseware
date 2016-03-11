@@ -18,9 +18,9 @@ public class Student extends BasicUser {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     public List<TakenCourse> takenCourses;
 
-    public static Finder<Long, Student> find = new Finder<>(Student.class);
+    public static Finder<String, Student> find = new Finder<>(Student.class);
 
-    public Long getStudentID() {
+    public String getStudentID() {
         return this.id;
     }
 
@@ -29,5 +29,10 @@ public class Student extends BasicUser {
         t.student = this;
         t.offeredCourse = offeredCourse;
         t.save();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Stud[%s, %s]", this.id, this.name);
     }
 }

@@ -4,9 +4,13 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET     /init                       controllers.Application.readEdu()
 
 GET     /login                      controllers.UserCtrl.login()
+POST    /login                      controllers.UserCtrl.doLogin()
+GET     /logout                     controllers.UserCtrl.logout()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET     /admin                      controllers.Admin.index()
+GET     /admin/init                 controllers.Admin.loadEdu()

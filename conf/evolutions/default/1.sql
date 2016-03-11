@@ -3,14 +3,9 @@
 
 # --- !Ups
 
-create table admin (
-  username                  varchar(255),
-  password                  varchar(255))
-;
-
 create table basic_user (
   dtype                     varchar(10) not null,
-  id                        bigserial not null,
+  id                        varchar(255) not null,
   password                  varchar(255),
   name                      varchar(255),
   birth_date                timestamp,
@@ -21,6 +16,7 @@ create table basic_user (
 create table course (
   course_id                 bigserial not null,
   title                     varchar(255),
+  department_no             integer,
   constraint pk_course primary key (course_id))
 ;
 
@@ -41,7 +37,7 @@ create table grading_group (
 create table offered_course (
   id                        bigserial not null,
   course_course_id          bigint,
-  lecturer_id               bigint,
+  lecturer_id               varchar(255),
   semester                  varchar(255),
   room                      varchar(255),
   lecture_time              varchar(255),
@@ -52,12 +48,12 @@ create table offered_course (
 
 create table taken_course (
   offered_course_id         bigint,
-  student_id                bigint)
+  student_id                varchar(255))
 ;
 
 create table teaching_assistance (
   id                        bigserial not null,
-  student_id                bigint,
+  student_id                varchar(255),
   course                    varchar(255),
   constraint pk_teaching_assistance primary key (id))
 ;
@@ -76,8 +72,6 @@ create index ix_teaching_assistance_student_5 on teaching_assistance (student_id
 
 
 # --- !Downs
-
-drop table if exists admin cascade;
 
 drop table if exists basic_user cascade;
 

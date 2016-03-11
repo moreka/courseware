@@ -10,11 +10,13 @@ import java.util.Date;
 public abstract class BasicUser extends Model {
 
     @Id
-    public Long id;
+    public String id;
 
     public String password;
     public String name;
     public Date birthDate;
+
+    public abstract String toString();
 
     public static Finder<Long, BasicUser> find = new Finder<>(BasicUser.class);
 
