@@ -1,6 +1,6 @@
 package controllers;
 
-import controllers.security.AdminSecured;
+import security.AdminSecured;
 import exceptions.AuthenticationError;
 import play.mvc.*;
 
@@ -9,7 +9,7 @@ import services.EduSystemGateway;
 
 import java.io.File;
 
-public class Admin extends Controller {
+public class AdminCtrl extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
     public Result index() {
@@ -23,7 +23,7 @@ public class Admin extends Controller {
             File currentSemesterData = EduSystemGateway.getInstance().getCurrentSemesterData();
             EduDataImportService.getInstance().importData(currentSemesterData);
 
-            return redirect(controllers.routes.Admin.index());
+            return redirect(AdminCtrl.index());
         }
         catch (AuthenticationError e) {
             e.printStackTrace();
@@ -31,7 +31,7 @@ public class Admin extends Controller {
         }
         catch (Exception e) {
             e.printStackTrace();
-            return internalServerError();
+            return internalServerError("Oops!");
         }
     }
 

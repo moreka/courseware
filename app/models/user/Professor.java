@@ -1,10 +1,13 @@
 package models.user;
 
+import models.IUniqueID;
 import models.academics.OfferedCourse;
+import models.security.AccessType;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -20,6 +23,13 @@ public class Professor extends BasicUser {
 
     public String getLecturerCode() {
         return this.id;
+    }
+
+    @Override
+    public List<AccessType> getAccessTypesTo(IUniqueID item) {
+        if (item.getOwner().id.equals(id))
+            return Arrays.asList(AccessType.values());
+        return Arrays.asList();
     }
 
     @Override

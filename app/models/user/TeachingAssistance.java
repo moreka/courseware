@@ -1,9 +1,12 @@
 package models.user;
 
+import com.avaje.ebean.Model;
+import models.academics.OfferedCourse;
+
 import javax.persistence.*;
 
 @Entity
-public class TeachingAssistance {
+public class TeachingAssistance extends Model {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,6 +15,7 @@ public class TeachingAssistance {
     @ManyToOne
     public Student student;
 
-    public String course;
+    @ManyToOne(cascade = CascadeType.ALL)
+    public OfferedCourse offeredCourse;
 
 }

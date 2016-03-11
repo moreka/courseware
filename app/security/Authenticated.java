@@ -1,17 +1,13 @@
-package controllers.security;
-
+package security;
 
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
 
-public class AdminSecured extends Security.Authenticator {
+public class Authenticated extends Security.Authenticator {
     @Override
     public String getUsername(Http.Context ctx) {
-        String username = ctx.session().get("username");
-        if (username == null || !username.equals("admin"))
-            return null;
-        return "admin";
+        return ctx.session().get("username");
     }
 
     @Override

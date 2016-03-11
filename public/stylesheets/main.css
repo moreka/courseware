@@ -4,5 +4,13 @@
 }
 
 * {
-    font-family: BYekan;
+    font-family: BYekan, sans-serif;
+}
+
+ol { counter-reset: item }
+ol li { display: block }
+ol li:before { content: counters(item, ".") "  "; counter-increment: item }
+
+ol li {
+    margin-left: 10px;
 }

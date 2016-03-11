@@ -1,7 +1,7 @@
 package services;
 
 import com.avaje.ebean.Model;
-import controllers.forms.User;
+import forms.User;
 import models.user.BasicUser;
 
 import java.util.List;

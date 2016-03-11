@@ -1,9 +1,10 @@
 package controllers;
 
-import controllers.forms.User;
+import forms.User;
 import models.user.BasicUser;
 import play.data.Form;
 import play.mvc.*;
+import security.Authenticated;
 import services.UserService;
 import views.html.*;
 
@@ -31,10 +32,9 @@ public class UserCtrl extends Controller {
         return ok(login.render(Form.form(User.class)));
     }
 
-    @Security.Authenticated
     public Result logout() {
         session().clear();
-        return ok(index.render("Logged out"));
+        return redirect("/");
     }
 
 }

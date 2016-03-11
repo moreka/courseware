@@ -1,4 +1,4 @@
-package controllers.forms;
+package forms;
 
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;

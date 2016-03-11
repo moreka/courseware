@@ -46,6 +46,15 @@ create table offered_course (
   constraint pk_offered_course primary key (id))
 ;
 
+create table syllabus_item (
+  id                        bigserial not null,
+  parent_id                 bigint,
+  offered_course_id         bigint,
+  title                     varchar(255),
+  item_order                integer,
+  constraint pk_syllabus_item primary key (id))
+;
+
 create table taken_course (
   offered_course_id         bigint,
   student_id                varchar(255))
@@ -54,20 +63,37 @@ create table taken_course (
 create table teaching_assistance (
   id                        bigserial not null,
   student_id                varchar(255),
-  course                    varchar(255),
+  offered_course_id         bigint,
   constraint pk_teaching_assistance primary key (id))
+;
+
+create table token (
+  id                        bigserial not null,
+  access_type               integer,
+  unique_id                 varchar(255),
+  user_id                   varchar(255),
+  constraint ck_token_access_type check (access_type in (0,1,2)),
+  constraint pk_token primary key (id))
 ;
 
 alter table offered_course add constraint fk_offered_course_course_1 foreign key (course_course_id) references course (course_id);
 create index ix_offered_course_course_1 on offered_course (course_course_id);
 alter table offered_course add constraint fk_offered_course_lecturer_2 foreign key (lecturer_id) references basic_user (id);
 create index ix_offered_course_lecturer_2 on offered_course (lecturer_id);
-alter table taken_course add constraint fk_taken_course_offeredCourse_3 foreign key (offered_course_id) references offered_course (id);
-create index ix_taken_course_offeredCourse_3 on taken_course (offered_course_id);
-alter table taken_course add constraint fk_taken_course_student_4 foreign key (student_id) references basic_user (id);
-create index ix_taken_course_student_4 on taken_course (student_id);
-alter table teaching_assistance add constraint fk_teaching_assistance_student_5 foreign key (student_id) references basic_user (id);
-create index ix_teaching_assistance_student_5 on teaching_assistance (student_id);
+alter table syllabus_item add constraint fk_syllabus_item_parent_3 foreign key (parent_id) references syllabus_item (id);
+create index ix_syllabus_item_parent_3 on syllabus_item (parent_id);
+alter table syllabus_item add constraint fk_syllabus_item_offeredCourse_4 foreign key (offered_course_id) references offered_course (id);
+create index ix_syllabus_item_offeredCourse_4 on syllabus_item (offered_course_id);
+alter table taken_course add constraint fk_taken_course_offeredCourse_5 foreign key (offered_course_id) references offered_course (id);
+create index ix_taken_course_offeredCourse_5 on taken_course (offered_course_id);
+alter table taken_course add constraint fk_taken_course_student_6 foreign key (student_id) references basic_user (id);
+create index ix_taken_course_student_6 on taken_course (student_id);
+alter table teaching_assistance add constraint fk_teaching_assistance_student_7 foreign key (student_id) references basic_user (id);
+create index ix_teaching_assistance_student_7 on teaching_assistance (student_id);
+alter table teaching_assistance add constraint fk_teaching_assistance_offered_8 foreign key (offered_course_id) references offered_course (id);
+create index ix_teaching_assistance_offered_8 on teaching_assistance (offered_course_id);
+alter table token add constraint fk_token_user_9 foreign key (user_id) references basic_user (id);
+create index ix_token_user_9 on token (user_id);
 
 
 
@@ -83,7 +109,11 @@ drop table if exists grading_group cascade;
 
 drop table if exists offered_course cascade;
 
+drop table if exists syllabus_item cascade;
+
 drop table if exists taken_course cascade;
 
 drop table if exists teaching_assistance cascade;
+
+drop table if exists token cascade;
 

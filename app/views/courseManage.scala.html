@@ -1,0 +1,23 @@
+@import models.academics.OfferedCourse
+@import models.security.AccessType
+@(course: OfferedCourse)
+
+@main("مدیریت درس") {
+    <h1>مدیریت دستیاران</h1>
+    <form method="POST" action="@routes.CourseCtrl.addTA(course.semester, course.course.courseId)">
+        <input type="text" name="username" class="form-control" placeholder="شماره دانشجویی دستیار">
+        <button type="submit" class="btn btn-success">send</button>
+    </form>
+
+    <ul>
+        @for(ta <- course.tas) {
+            <li>@ta.student.id
+                @for(t <- AccessType.values()) {
+                    [<a href="@routes.CourseCtrl.addTokenToTA(course.semester, course.course.courseId)?taId=@ta.id&t=@t">
+                        دسترسی
+                            @t</a>]
+                }
+            </li>
+        }
+    </ul>
+}

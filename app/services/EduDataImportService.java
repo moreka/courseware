@@ -115,7 +115,7 @@ public class EduDataImportService {
                 offeredCourse.id = (long) row.getCell(0).getNumericCellValue();
                 offeredCourse.lectureTime = row.getCell(4).getStringCellValue();
                 offeredCourse.finalExamTime = DateHelper.getDateTime(row.getCell(5).getStringCellValue());
-                offeredCourse.semester = row.getCell(6).getStringCellValue();
+                offeredCourse.semester = row.getCell(6).getStringCellValue().replaceAll("\\s+","");;
                 offeredCourse.groupId = (int) row.getCell(7).getNumericCellValue();
                 offeredCourse.room = row.getCell(8).getStringCellValue();
 

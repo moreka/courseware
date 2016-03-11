@@ -1,0 +1,51 @@
+@import models.academics.{OfferedCourse, SyllabusItem}
+@import models.user.BasicUser
+@import models.security.AccessType
+@(course: OfferedCourse, firstTier: java.util.List[SyllabusItem], user: BasicUser)
+
+@hasCreateAccess = @{user.hasAccessTo(course, AccessType.CREATE)}
+@hasDeleteAccess = @{user.hasAccessTo(course, AccessType.DELETE)}
+
+@main("Edit Syllabus") {
+
+    @if(hasCreateAccess) {
+        <div class="row">
+            <div class="col-lg-3 col-lg-offset-3">
+                <form action="" method="POST">
+                    <select name="parent" class="form-control">
+                        <option value="-1" selected="selected">سرفصل اصلی</option>
+                        @for(syllabItem <- course.syllabusItems) {
+                            <option value="@syllabItem.id">@syllabItem.title</option>
+                        }
+                    </select>
+                    <input type="text" name="syllab" class="form-control">
+                    <button type="submit" class="btn btn-primary">اضافه کردن به سیلابس درس</button>
+                </form>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>سیلابس</h2>
+            <ol>
+                @for(item <- firstTier) {
+                    <li>
+                        &nbsp;&nbsp; @item.title
+                        @if(hasDeleteAccess) {
+                            <a href="#">delete</a>
+                        }
+                        <ol>
+                            @for(child <- item.children) {
+                                <li>&nbsp;&nbsp; @child.title
+                                    @if(hasDeleteAccess) {
+                                        <a href="#">delete</a>
+                                    }
+                                </li>
+                            }
+                        </ol>
+                    </li>
+                }
+            </ol>
+        </div>
+    </div>
+}
